@@ -16,7 +16,7 @@ def bomb_type2(x, y):
     for dx, dy in [(1,0), (-1, 0),(0, 1),(0,-1)]:
         nx = x + dx
         ny = y + dy
-        if 0 <= nx <= n and 0 <= ny < n:
+        if 0 <= nx < n and 0 <= ny < n:
             coords.add((nx, ny))
     return coords
 
@@ -25,7 +25,7 @@ def bomb_type3(x, y):
     for dx, dy in [(-1, 1), (-1, -1), (1, 1), (1, -1)]:
         nx = x + dx
         ny = y + dy
-        if 0 <= nx <= n and 0 <= ny < n:
+        if 0 <= nx < n and 0 <= ny < n:
             coords.add((nx, ny))
     return coords
 
