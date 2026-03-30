@@ -1,37 +1,29 @@
 import sys
+from collections import defaultdict, deque
+from heapq import heapify, heappush, heappop
+
+sys.setrecursionlimit(10**6)
 
 input = sys.stdin.readline
 
-n = int(input().strip())
-
-colUsed = [False] * (n)
-diagUsed = [False] * ((2*n)-1)
-AntidiagUsed = [False] * ((2*n)-1)
-
+N = int(input())
 tot = 0
 
-def placeQueens(row):
-    global tot
+cols = [False] * N
+diag1 = [False] * (2*N-1)
+diag2 = [False] * (2*N-1)
 
-    if (row == n):
-        tot+=1
+def Backtrack(Length):
+    global tot
+    if (Length == N):
+        tot += 1
         return
     
-    for col in range(n):
-        diagIndex = row - col + n - 1 
-        AntiDiagIndex = row + col
+    for i in range(N):
+        if not cols[i] and not diag1[i+Length] and not diag2[i-Length+N-1]:
+            cols[i] = diag1[i+Length] = diag2[i-Length+N-1] = True
+            Backtrack(Length+1)
+            cols[i] = diag1[i+Length] = diag2[i-Length+N-1] = False
 
-        if not colUsed[col] and not diagUsed[diagIndex] and not AntidiagUsed[AntiDiagIndex]:
-            colUsed[col] = True
-            diagUsed[diagIndex] = True
-            AntidiagUsed[AntiDiagIndex] = True
-
-            placeQueens(row + 1)
-
-            colUsed[col] = False
-            diagUsed[diagIndex] = False
-            AntidiagUsed[AntiDiagIndex] = False
-
-
-placeQueens(0)
+Backtrack(0)
 print(tot)
